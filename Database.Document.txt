@@ -1,0 +1,32 @@
+Database document(SQLite3)  —author: Lawrence Zhou
+There are 2 tables in user_admin.db, which are list and serverlocation.
+(1)list
+It is a table to store the info of the users and administrators.
+The table list is defined as:
+create table list(
+id integer primary key autoincrement,
+ name text not null,
+password text not null,
+ type text not null，
+status text not null,
+enabled text not null,
+email text not null);
+id: It increases automatically, so it is unique obviously.
+name: It is username, and it should be unique and the registration page (register.html) will check whether it is unique when insert a new user into the database.
+password: It should be between 6 and 12 characters.
+type: It should be either ‘user’ or ‘admin’.
+status: It should be either ‘member’ or ‘waiting’.
+enabled: It should be either ‘Yes’ or ‘-—-‘;
+
+(2)serverlocation
+It is a table to store the info of the Drum Server.
+The table serverlocation is defined as:
+ create table serverlocation(
+ id integer primary key autoincrement,
+ip text not null,
+port text not null,
+time text not null 
+secretsession integer not null);
+id: It increases automatically, so it is unique obviously.
+secretsession: it should be between 0 and 65535, which is generated randomly.
+

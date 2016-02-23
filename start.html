@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1 id="myH1"></h1>
+<p><strong>Note:</strong> Server-Sent Events are not supported in Internet Explorer.</p>
+<div id="myDIV" STYLE=" height: 2000px; width: 5000px; font-size: 20px; overflow: auto;"></div>
+
+<script type="text/javascript">
+var DebugInfo = new Array();
+
+if(typeof(EventSource) !== "undefined") {
+    var source = new EventSource("cgi-bin/tt.py");
+    source.onopen = function() {
+        document.getElementById("myH1").innerHTML = "Getting server updates";
+    };
+    
+    source.onmessage = function(event) {
+        var temp = event.data;
+        var tempArray = temp.split(" ");
+        var i = DebugInfo.length;
+        if(tempArray[0] == "1")
+        {
+            DebugInfo[i] = new Array();
+            DebugInfo[i][0] = tempArray[0];
+            DebugInfo[i][1] = tempArray[1];
+            DebugInfo[i][2] = tempArray[2];
+            DebugInfo[i][3] = tempArray[3];
+ 
+            var displayInfo = "<table bgcolor=\"green\">\n";
+            displayInfo += "<tr><th>IP</th>\n<th>port</th>\n<th>Round Trip Time</th>\n</tr>\n"
+            for(var k=0; k<DebugInfo.length; k++)
+            {
+                if(k%2 == 0)
+                {
+                    displayInfo += "<tr><td bgcolor=\"#dadada\"><span>"+ DebugInfo[k][1]+"</span></td><td bgcolor=\"#dadada\"><span>"+DebugInfo[k][2]+"</span></td><td bgcolor=\"#dadada\"><span>"+DebugInfo[k][3]+"ms</span></td></tr>\n";
+                }
+                else
+                {
+                    displayInfo += "<tr><td><span>"+ DebugInfo[k][1]+"</span></td><td><span>"+DebugInfo[k][2]+"</span></td><td><span>"+DebugInfo[k][3] + "ms</span></td></tr>\n";  
+                }
+                
+            }
+            displayInfo += "</table>\n";
+            document.getElementById("myDIV").innerHTML = displayInfo;
+        }
+        else if(tempArray[0] == "2")
+        {
+            var num = -1;
+            for (var k=0;k<DebugInfo.length;k++)
+            {
+                if (DebugInfo[k][1] == tempArray[1] && DebugInfo[k][2] == tempArray[2])
+                {
+                    num = k;
+                }
+            }
+
+            if(num != -1)
+            {
+                DebugInfo.splice(num, 1);
+            }
+            else
+            {
+                document.getElementById("myDIV").innerHTML = "Fatal Error!";
+            }
+
+            var displayInfo = "<table bgcolor=\"green\">\n";
+            displayInfo += "<tr><th>IP</th>\n<th>port</th>\n<th>Round Trip Time</th>\n</tr>\n"
+            for(var k=0; k<DebugInfo.length; k++)
+            {
+                if(k%2 == 0)
+                {
+                    displayInfo += "<tr><td bgcolor=\"#dadada\"><span>"+ DebugInfo[k][1]+"</span></td><td bgcolor=\"#dadada\"><span>"+DebugInfo[k][2]+"</span></td><td bgcolor=\"#dadada\"><span>"+DebugInfo[k][3]+"ms</span></td></tr>\n";
+                }
+                else
+                {
+                    displayInfo += "<tr><td><span>"+ DebugInfo[k][1]+"</span></td><td><span>"+DebugInfo[k][2]+"</span></td><td><span>"+DebugInfo[k][3] + "ms</span></td></tr>\n";  
+                }
+                
+            }
+            displayInfo += "</table>\n";
+            document.getElementById("myDIV").innerHTML = displayInfo;
+        }
+        else if(tempArray[0] == "3")
+        {
+            var num = -1;
+            for (var k=0;k<DebugInfo.length;k++)
+            {
+                if (DebugInfo[k][1] == tempArray[1] && DebugInfo[k][2] == tempArray[2])
+                {
+                    num = k;
+                }
+            }
+
+            if(num != -1)
+            {
+                DebugInfo[num][3] = tempArray[3];
+            }
+            else
+            {
+                document.getElementById("myDIV").innerHTML = "Fatal Error!";
+            }
+
+            var displayInfo = "<table bgcolor=\"green\">\n";
+            displayInfo += "<tr><th>IP</th>\n<th>port</th>\n<th>Round Trip Time</th>\n</tr>\n"
+            for(var k=0; k<DebugInfo.length; k++)
+            {
+                if(k%2 == 0)
+                {
+                    displayInfo += "<tr><td bgcolor=\"#dadada\"><span>"+ DebugInfo[k][1]+"</span></td><td bgcolor=\"#dadada\"><span>"+DebugInfo[k][2]+"</span></td><td bgcolor=\"#dadada\"><span>"+DebugInfo[k][3]+"ms</span></td></tr>\n";
+                }
+                else
+                {
+                    displayInfo += "<tr><td><span>"+ DebugInfo[k][1]+"</span></td><td><span>"+DebugInfo[k][2]+"</span></td><td><span>"+DebugInfo[k][3] + "ms</span></td></tr>\n";  
+                }
+                
+            }
+            displayInfo += "</table>\n";
+            document.getElementById("myDIV").innerHTML = displayInfo;
+        }
+    };
+
+} else {
+    document.getElementById("myDIV").innerHTML = "Sorry, your browser does not support server-sent events...";
+}
+</script>
+
+</body>
+</html>
+

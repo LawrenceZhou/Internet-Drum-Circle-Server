@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>      
+<head>  
+    <title>Register a new player account</title>  
+</head>  
+<body>
+    <center><h2>Register a new player account</h2></center>
+    <form action="check.php" name="regForm" method="post">  
+    <table align="center">  
+        <tr>  
+            <td width="50%" align="right">user id</td>  
+            <td><input type="text" name="userid" onBlur="ckUserid()">  
+                <span id="useridResult"></span>  
+            </td>  
+        </tr>
+
+        <tr>  
+            <td width="50%" align="right">email</td>  
+            <td><input type="text" name="email" onBlur = "ckEmail()">  
+                <span id="emailResult"></span>  
+            </td>  
+        </tr>  
+        <tr>
+
+            <td align="right">password</td>  
+            <td><input type="password" name="pwd1" onBlur="ckPwd1()">  
+                <span id="pwd1Result"></span>  
+            </td>  
+        </tr>  
+  
+        <tr>  
+            <td align="right">confirm password</td>  
+            <td><input type="password" name="pwd2" onBlur="ckPwd2()">  
+                <span id="pwd2Result"></span>  
+            </td>  
+        </tr>  
+
+         <tr>  
+            <td align="right">Please input the answer:</td> 
+        </tr>
+        <tr> 
+            <td align="right"><span id="txtCaptchaDiv" style="background-color:#A51D22;color:#FFF;padding:5px"></span>
+                 <input type="hidden" id="txtCaptcha" name = "txtCaptcha"  />
+            </td>
+            <td> 
+                <input type="text" name="recaptcha" id ="recaptcha" onBlur="ckCaptcha()"> 
+                <span id="captchaResult"></span>  
+            </td>  
+        </tr> 
+        <tr>  
+            <td colspan="2" align="center">  
+                <input type="button" value="Register" onClick="mySubmit()">  
+                <input type="button" value="Reset" onClick="myReset()">  
+            </td>  
+        </tr> 
+    </table>  
+    </form>
+<script type="text/javascript">
+var a = Math.ceil(Math.random() * 9);
+var b = Math.ceil(Math.random() * 9);
+var c = a+b;
+var d = c+'';
+document.getElementById("txtCaptcha").value = d;
+document.getElementById("txtCaptchaDiv").innerHTML = a+"+"+b+"=";
+</script>
+<script src="form.js"></script>  
+</body>
+</html>  
